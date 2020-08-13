@@ -50,11 +50,11 @@ jobs:
     steps:
       - name: Slack Notification
         uses: homoluctus/slatify@master
-        if: always()
+        if: "false" # always()
         with:
           type: ${{ job.status }}
           job_name: "*Build and Debug Check*"
-          mention: "channel"
+          mention: "here"
           mention_if: "always"
           commit: true
           token: ${{ secrets.GITHUB_TOKEN }}
