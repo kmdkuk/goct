@@ -1,0 +1,39 @@
+project_name: go-cli-template
+env:
+  - GO111MODULE=on
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - main: .
+    binary: go-cli-template
+    ldflags:
+      - -s -w
+      - -X github.com/kmdkuk/go-cli-template/version.Version={{.Version}}
+      - -X github.com/kmdkuk/go-cli-template/version.Revision={{.ShortCommit}}
+      - -X github.com/kmdkuk/go-cli-template/version.BuildDate={{.Date}}
+    goos:
+      - windows
+      - darwin
+      - linux
+    goarch:
+      - 386
+      - amd64
+    env:
+      - CGO_ENABLED=0
+archives:
+  - name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+    format: binary
+    replacements:
+      darwin: darwin
+      linux: linux
+      windows: windows
+      386: i386
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip
+checksum:
+  name_template: checksums.txt
+release:
+  prerelease: auto
