@@ -21,8 +21,13 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/kmdkuk/go-cli-template/cmd"
+import (
+	"github.com/kmdkuk/go-cli-template/cmd"
+	"github.com/kmdkuk/go-cli-template/log"
+)
 
 func main() {
+	log.Debug("start command")
 	cmd.Execute()
+	log.Debug("finish command")
 }
