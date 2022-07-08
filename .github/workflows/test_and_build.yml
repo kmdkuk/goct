@@ -1,10 +1,13 @@
 name: CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    types: [opened, synchronize, edited]
+  push:
+    branches: 
+    - 'main'
+
+env:
+  go-version: 1.18
 
 jobs:
   prepare:
@@ -12,7 +15,7 @@ jobs:
     if: "!contains(github.event.pull_request.title, '[wip]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.pull_request.title, '[skip ci]')"
     steps:
       - run: echo "${{ github.event.pull_request.title }}"
-  test:
+  build:
     runs-on: ${{ matrix.os }}
     needs: prepare
     strategy:
@@ -26,22 +29,23 @@ jobs:
       - name: setup go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.18
+          go-version: ${{ env.go-version }}
       - name: checkout
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-      - name: cache
-        uses: actions/cache@v3
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-      - name: Ensure go.mod is already tidied
-        run: go mod tidy && git diff -s --exit-code go.sum
       - name: build
         run: make build
+  test:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - name: setup go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.go-version }}
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Ensure go.mod is already tidied
+        run: go mod tidy && git diff -s --exit-code go.sum
       - name: test
         run: make test
   notification:
