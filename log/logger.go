@@ -51,12 +51,12 @@ func init() {
 func NewLogger(l Level) *Logger {
 	levelPrefix, _ := l.Prefix()
 	return &Logger{
-		level: l,
-		logger: log.New(os.Stdout,levelPrefix,log.Ldate|log.Ltime),
+		level:  l,
+		logger: log.New(os.Stdout, levelPrefix, log.Ldate|log.Ltime),
 	}
 }
 
-func (l *Logger) Logf(level Level, format string, v ...interface{}){
+func (l *Logger) Logf(level Level, format string, v ...interface{}) {
 	l.Log(level, fmt.Sprintf(format, v...))
 }
 
@@ -75,7 +75,7 @@ func (l *Logger) IsLevelEnabled(level Level) bool {
 	return l.level <= level
 }
 
-func Debugf(format string, v ...interface{}){
+func Debugf(format string, v ...interface{}) {
 	logger.Logf(DEBUG, format, v...)
 }
 
@@ -83,7 +83,7 @@ func Debug(v ...interface{}) {
 	logger.Log(DEBUG, v...)
 }
 
-func Warnf(format string, v ...interface{}){
+func Warnf(format string, v ...interface{}) {
 	logger.Logf(WARN, format, v...)
 }
 
@@ -99,7 +99,7 @@ func Error(v ...interface{}) {
 	logger.Log(ERROR, v...)
 }
 
-func Fatalf(format string, v ...interface{}){
+func Fatalf(format string, v ...interface{}) {
 	logger.Logf(FATAL, format, v...)
 }
 

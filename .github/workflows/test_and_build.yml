@@ -38,14 +38,10 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v3
-        with:
-          version: latest
       - name: Ensure go.mod is already tidied
         run: go mod tidy && git diff -s --exit-code go.sum
       - name: build
-        run: make bin/go-cli-template
+        run: make build
       - name: test
         run: make test
   notification:
