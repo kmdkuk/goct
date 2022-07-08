@@ -9,9 +9,9 @@ builds:
     binary: go-cli-template
     ldflags:
       - -s -w
-      - -X github.com/kmdkuk/go-cli-template/version.Version={{.Version}}
-      - -X github.com/kmdkuk/go-cli-template/version.Revision={{.ShortCommit}}
-      - -X github.com/kmdkuk/go-cli-template/version.BuildDate={{.Date}}
+      - -X github.com/kmdkuk/go-cli-template/pkg/version.Version={{.Version}}
+      - -X github.com/kmdkuk/go-cli-template/pkg/version.Revision={{.ShortCommit}}
+      - -X github.com/kmdkuk/go-cli-template/pkg/version.BuildDate={{.Date}}
     goos:
       - windows
       - darwin
