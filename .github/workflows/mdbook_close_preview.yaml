@@ -1,37 +1,22 @@
-name: Book preview
+name: Book close preview
 on:
   pull_request:
+    types:
+    - closed
 jobs:
-  build:
-    name: Build book
+  close:
+    name: Publish book on GitHub Pages
     runs-on: ubuntu-20.04
-    outputs:
-      branch: ${{ steps.extract_branch.outputs.branch }}
+    needs: build
     steps:
     - name: Extract branch name
       shell: bash
       run: echo "::set-output name=branch::$(REF=${GITHUB_HEAD_REF:-$GITHUB_REF} && echo ${REF#refs/heads/} | sed 's/\//-/g')"
       id: extract_branch
     - uses: actions/checkout@v3
-    - run: make book
-    - uses: actions/upload-artifact@v3
-      with:
-        name: preview
-        path: docs/book
-        retention-days: 1
-  publish:
-    name: Publish book on GitHub Pages
-    runs-on: ubuntu-20.04
-    needs: build
-    steps:
-    - uses: actions/checkout@v3
       with:
         ref: gh-pages
-    - run: rm -rf _preview/${{ needs.build.outputs.branch }}
-    - uses: actions/download-artifact@v3
-      with:
-        name: preview
-        path: _preview/${{ needs.build.outputs.branch }}
+    - run: rm -rf _preview/${{ steps.extract_branch.outputs.branch }}
     - run: git add .
     - name: Check diff
       run: |
@@ -51,8 +36,7 @@ jobs:
       if: env.NO_DIFF != '1'
       run: git push origin gh-pages
     - name: Write comment
-      if: github.event_name == 'pull_request' && github.event.action == 'opened'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        gh pr comment ${{ github.event.pull_request.number }} --body "Preview: https://kmdk.uk/goct/_preview/${{ needs.build.outputs.branch }}"
+        gh pr comment ${{ github.event.pull_request.number }} --body "Preview closed."
