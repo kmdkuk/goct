@@ -1,7 +1,10 @@
 package version
 
 import (
+	"fmt"
 	"runtime/debug"
+
+	"go.uber.org/zap"
 )
 
 var (
@@ -23,6 +26,7 @@ func GetVersion() string {
 
 	// if go install
 	if buildInfo, ok := debug.ReadBuildInfo(); ok && buildInfo.Main.Version != "" {
+		zap.L().Debug(fmt.Sprintf("get buildInfo.Main %v", buildInfo.Main))
 		return buildInfo.Main.Version
 	}
 
@@ -60,6 +64,7 @@ func getBuildSettings(key string) (string, bool) {
 	if !ok {
 		return "", false
 	}
+	zap.L().Debug(fmt.Sprintf("get buildInfo.Settings %v", buildInfo.Settings))
 	for _, v := range buildInfo.Settings {
 		if v.Key == key {
 			return v.Value, true
