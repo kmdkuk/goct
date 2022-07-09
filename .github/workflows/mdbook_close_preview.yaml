@@ -1,0 +1,42 @@
+name: Book close preview
+on:
+  pull_request:
+    types:
+    - closed
+jobs:
+  close:
+    name: Publish book on GitHub Pages
+    runs-on: ubuntu-20.04
+    needs: build
+    steps:
+    - name: Extract branch name
+      shell: bash
+      run: echo "::set-output name=branch::$(REF=${GITHUB_HEAD_REF:-$GITHUB_REF} && echo ${REF#refs/heads/} | sed 's/\//-/g')"
+      id: extract_branch
+    - uses: actions/checkout@v3
+      with:
+        ref: gh-pages
+    - run: rm -rf _preview/${{ steps.extract_branch.outputs.branch }}
+    - run: git add .
+    - name: Check diff
+      run: |
+        diffs=$(git status -s)
+        if [ "$diffs" = "" ]; then
+          echo "NO_DIFF=1" >> $GITHUB_ENV
+        else
+          printf "%s\n" "$diffs"
+        fi
+    - name: Commit changes
+      if: env.NO_DIFF != '1'
+      run: |
+        git config --global user.name 'actions'
+        git config --global user.email 'actions@users.noreply.github.com'
+        git commit -m 'update'
+    - name: Push to gh-pages
+      if: env.NO_DIFF != '1'
+      run: git push origin gh-pages
+    - name: Write comment
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh pr comment ${{ github.event.pull_request.number }} --body "Preview closed."
