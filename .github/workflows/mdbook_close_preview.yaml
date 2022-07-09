@@ -7,7 +7,6 @@ jobs:
   close:
     name: Publish book on GitHub Pages
     runs-on: ubuntu-20.04
-    needs: build
     steps:
     - name: Extract branch name
       shell: bash
