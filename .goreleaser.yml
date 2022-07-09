@@ -1,4 +1,4 @@
-project_name: go-cli-template
+project_name: goct
 env:
   - GO111MODULE=on
 before:
@@ -6,12 +6,12 @@ before:
     - go mod tidy
 builds:
   - main: .
-    binary: go-cli-template
+    binary: goct
     ldflags:
       - -s -w
-      - -X github.com/kmdkuk/go-cli-template/pkg/version.Version={{.Version}}
-      - -X github.com/kmdkuk/go-cli-template/pkg/version.Revision={{.ShortCommit}}
-      - -X github.com/kmdkuk/go-cli-template/pkg/version.BuildDate={{.Date}}
+      - -X github.com/kmdkuk/goct/pkg/version.Version={{.Version}}
+      - -X github.com/kmdkuk/goct/pkg/version.Revision={{.ShortCommit}}
+      - -X github.com/kmdkuk/goct/pkg/version.BuildDate={{.Date}}
     goos:
       - windows
       - darwin

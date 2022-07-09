@@ -20,10 +20,10 @@ ifndef CGO_LDFLAGS
 	export CGO_LDFLAGS := $(LDFLAGS)
 endif
 
-GO_LDFLAGS := -X github.com/kmdkuk/go-cli-template/pkg/version.Revision=$(REVISION) $(GO_LDFLAGS)
-GO_LDFLAGS := -X github.com/kmdkuk/go-cli-template/pkg/version.BuildDate=$(BUILD_DATE) $(GO_LDFLAGS)
+GO_LDFLAGS := -X github.com/kmdkuk/goct/pkg/version.Revision=$(REVISION) $(GO_LDFLAGS)
+GO_LDFLAGS := -X github.com/kmdkuk/goct/pkg/version.BuildDate=$(BUILD_DATE) $(GO_LDFLAGS)
 DEV_LDFLAGS := $(GO_LDFLAGS)
-GO_LDFLAGS := -X github.com/kmdkuk/go-cli-template/pkg/version.Version=$(VERSION) $(GO_LDFLAGS)
+GO_LDFLAGS := -X github.com/kmdkuk/goct/pkg/version.Version=$(VERSION) $(GO_LDFLAGS)
 
 BIN_DIR := $(CURDIR)/bin
 STATICCHECK := $(BIN_DIR)/staticcheck
