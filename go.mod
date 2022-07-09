@@ -1,4 +1,4 @@
-module github.com/kmdkuk/go-cli-template
+module github.com/kmdkuk/goct
 
 go 1.18
 

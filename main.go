@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/kmdkuk/go-cli-template/cmd"
+	"github.com/kmdkuk/goct/cmd"
 )
 
 func main() {
