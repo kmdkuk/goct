@@ -7,7 +7,7 @@ on:
     - 'main'
 
 env:
-  go-version: 1.18
+  go-version: 1.21
 
 jobs:
   prepare:
@@ -63,4 +63,3 @@ jobs:
           commit: true
           token: ${{ secrets.GITHUB_TOKEN }}
           url: ${{ secrets.SLACK_WEBHOOK }}
-
