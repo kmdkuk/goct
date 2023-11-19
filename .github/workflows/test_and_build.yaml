@@ -48,6 +48,21 @@ jobs:
         run: go mod tidy && git diff -s --exit-code go.sum
       - name: test
         run: make test
+  release-dry-run:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v5
+        with:
+          version: latest
+          args: --snapshot --skip-publish --clean
   notification:
     runs-on: ubuntu-latest
     needs: test
