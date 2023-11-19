@@ -6,7 +6,7 @@ on:
 jobs:
   close:
     name: Publish book on GitHub Pages
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - name: Extract branch name
       shell: bash
