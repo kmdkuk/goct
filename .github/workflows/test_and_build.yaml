@@ -62,11 +62,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v5
         with:
           version: latest
-<<<<<<< Updated upstream
-          args: release --skip=publish --clean
-=======
           args: release --snapshot --skip=publish --clean
->>>>>>> Stashed changes
   notification:
     runs-on: ubuntu-latest
     needs: test
