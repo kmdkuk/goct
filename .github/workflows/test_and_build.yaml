@@ -62,7 +62,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v5
         with:
           version: latest
-          args: --snapshot --skip-publish --clean
+          args: release --skip=publish --clean
   notification:
     runs-on: ubuntu-latest
     needs: test
