@@ -27,7 +27,7 @@ jobs:
           - windows-latest
     steps:
       - name: setup go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version: ${{ env.go-version }}
       - name: checkout
@@ -39,7 +39,7 @@ jobs:
     needs: prepare
     steps:
       - name: setup go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version: ${{ env.go-version }}
       - name: checkout
