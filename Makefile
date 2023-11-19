@@ -61,9 +61,10 @@ test: lint ## Run lint & test.
 	go test ./...
 
 .PHONY: lint
-lint: staticcheck ## Run lint
+lint: staticcheck golangci-lint ## Run lint
 	test -z "$$(gofmt -s -l . | tee /dev/stderr)"
 	$(STATICCHECK) ./...
+	$(GOLANGCI_LINT) run
 	go vet ./...
 
 ##@ Documentations
@@ -93,3 +94,11 @@ staticcheck: $(STATICCHECK)
 $(STATICCHECK):
 	mkdir -p $(BIN_DIR)
 	GOBIN=$(BIN_DIR) go install honnef.co/go/tools/cmd/staticcheck@latest
+
+GOLANGCI_LINT = $(BIN_DIR)/golangci-lint
+GOLANGCI_LINT_VERSION ?= v1.54.2
+golangci-lint:
+	@[ -f $(GOLANGCI_LINT) ] || { \
+	set -e ;\
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(shell dirname $(GOLANGCI_LINT)) $(GOLANGCI_LINT_VERSION) ;\
+	}
