@@ -12,7 +12,7 @@ jobs:
       shell: bash
       run: echo "::set-output name=branch::$(REF=${GITHUB_HEAD_REF:-$GITHUB_REF} && echo ${REF#refs/heads/} | sed 's/\//-/g')"
       id: extract_branch
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         ref: gh-pages
     - run: rm -rf _preview/${{ steps.extract_branch.outputs.branch }}
