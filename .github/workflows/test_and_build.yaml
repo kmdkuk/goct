@@ -23,24 +23,24 @@ jobs:
           - macOS-latest
           - windows-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
       - name: setup go
         uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
-      - name: checkout
-        uses: actions/checkout@v4
       - name: build
         run: make build
   test:
     runs-on: ubuntu-latest
     needs: prepare
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
       - name: setup go
         uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
-      - name: checkout
-        uses: actions/checkout@v4
       - name: Ensure go.mod is already tidied
         run: go mod tidy && git diff -s --exit-code go.sum
       - name: test
