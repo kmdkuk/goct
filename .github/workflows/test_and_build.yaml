@@ -24,7 +24,7 @@ jobs:
           - windows-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: setup go
         uses: actions/setup-go@v5
         with:
@@ -36,7 +36,7 @@ jobs:
     needs: prepare
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: setup go
         uses: actions/setup-go@v5
         with:
@@ -50,7 +50,7 @@ jobs:
     needs: prepare
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
